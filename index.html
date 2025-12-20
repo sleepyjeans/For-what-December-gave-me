@@ -2,99 +2,148 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Happy Birthday!</title>
+  <title>Letters Written in Winter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
   <style>
-   body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-
-  /* Background image */
-  background-image: url("redheartspixel.jpeg");
-  background-repeat: repeat;
-  background-size: 120px 120px;
-  background-position: center;
-
-  /* Dark overlay effect */
-  background-color: #0e0f14;
-  background-blend-mode: multiply;
-
-  color: #f2f2f2;
-  line-height: 1.7;
-}
-
+    /* RESET */
+    * {
+      box-sizing: border-box;
     }
 
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #0e0f14, #151824);
+      color: #f2f2f2;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* HEART BACKGROUND */
+    .heart-bg {
+      position: fixed;
+      inset: 0;
+      background-image: url("redheartspixel.jpeg");
+      background-repeat: repeat;
+      background-size: 120px 120px;
+      opacity: 0.25;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: -3;
+    }
+
+    /* STARS */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh);
+      }
+      to {
+        transform: translateY(-10vh);
+      }
+    }
+
+    /* HEADER */
     header {
       text-align: center;
       padding: 80px 20px 40px;
+      max-width: 800px;
+      margin: auto;
     }
 
     header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2.5em;
+      font-size: 2.5rem;
       font-weight: 400;
       margin-bottom: 10px;
     }
 
     header p {
       opacity: 0.7;
-      font-size: 1em;
+      font-size: 1rem;
     }
 
+    /* CONTENT CONTAINER */
     .container {
       max-width: 800px;
       margin: auto;
       padding: 20px;
     }
 
+    /* LETTER CARDS */
     .letter {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.04);
       border-radius: 16px;
       padding: 30px;
       margin-bottom: 40px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
     }
 
     .letter h2 {
       font-family: 'Playfair Display', serif;
       font-weight: 400;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .letter p {
+      margin-bottom: 15px;
     }
 
     .letter img {
       width: 100%;
       border-radius: 12px;
       margin: 20px 0;
+      display: block;
     }
 
+    /* FOOTER */
     footer {
       text-align: center;
       padding: 60px 20px;
       opacity: 0.6;
-      font-size: 0.9em;
-    }
-
-    audio {
-      display: none;
+      font-size: 0.9rem;
+      max-width: 800px;
+      margin: auto;
     }
   </style>
 </head>
 
 <body>
 
+  <!-- BACKGROUND LAYERS -->
+  <div class="heart-bg"></div>
+  <div class="stars"></div>
+
+  <!-- HEADER -->
   <header>
     <h1>Letters Written in Winter</h1>
     <p>something warm, just for you</p>
   </header>
 
-  <div class="container">
+  <!-- LETTERS -->
+  <main class="container">
 
-  
     <div class="letter">
       <h2>December 01</h2>
       <p>
@@ -113,31 +162,56 @@
     </div>
 
     <div class="letter">
-  <h2>December 02</h2>
+      <h2>December 02</h2>
 
-  <p>
-   I'm sure that I'll melt into your touch the moment I feel it,
-    like gravity will forget about me.
+      <p>
+        I'm sure that I'll melt into your touch the moment I feel it,
+        like gravity will forget about me.
+        <br><br>
+        I'm sure it'll feel weightless and make me float up to the sky,
+        and I'm sure it'll heal me of any illness that exists.
+        <br><br>
+        I think that's your superpower.
+      </p>
 
-I'm sure it'll feel like weightless and make me float up to the sky,
-    and I'm sure it'll heal me of any illness that exists.
+      <img src="april2.jpeg" alt="Drawing">
 
-I think that's your superpower.
-  </p>
+      <p>
+        Thinking of you tonight.
+      </p>
+    </div>
 
-  <img src="april2.jpeg">
+  </main>
 
-  <p>
-    Thinking of you tonight.
-  </p>
-</div>
-
-
-  </div>
-
+  <!-- FOOTER -->
   <footer>
     Yours truly, with love.
   </footer>
+
+  <!-- HEART FADE ON SCROLL -->
+  <script>
+    const heartBg = document.querySelector('.heart-bg');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const fade = Math.max(0, 0.25 - scrollY / 1000);
+      heartBg.style.opacity = fade;
+    });
+  </script>
+
+  <!-- STAR GENERATOR -->
+  <script>
+    const starsContainer = document.querySelector('.stars');
+
+    for (let i = 0; i < 40; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.animationDuration = 10 + Math.random() * 20 + 's';
+      star.style.animationDelay = Math.random() * 20 + 's';
+      starsContainer.appendChild(star);
+    }
+  </script>
 
 </body>
 </html>
